@@ -66,16 +66,7 @@ namespace Algo_project
         }
         public static void Main()
         {
-            int[] arr = new int[] { 4,3,2};
-            Console.Write("Number of inversions are "
-                          +inversion_count(arr,0,arr.Length-1));
-            //Console.Write("yarab");
-
-
-
             //-----------------------------MANHATTEN DISTANCE------------------------------------------
-
-
             int[,] ideal = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 0 } };
             int[,] test = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 0 } };
             IDictionary<int, int[]> places = new Dictionary<int, int[]>();
@@ -105,6 +96,9 @@ namespace Algo_project
                 }
             }
             Console.WriteLine(manhatten);
+            Console.WriteLine("bla bla bla ");
+
+
         }
     }
 
