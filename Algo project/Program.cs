@@ -54,10 +54,10 @@ namespace Algo_project
                     r_index++;
                 }
 
-            //for (l_index = left, k = 0; l_index <= right; l_index++, k++)
-            for(l_index=left;l_index<right-left+1;l_index++)
+            for (l_index = left, k = 0; l_index <= right; l_index++, k++)
+            //for(l_index=left;l_index<right-left+1;l_index++)
             {
-                //Console.WriteLine(temp[k]);
+                //Console.WriteLine(temp[k]);asdasd
                 arr[l_index] = temp[l_index];
             }
 
@@ -66,9 +66,10 @@ namespace Algo_project
         }
         public static void Main()
         {
-            int[] arr = new int[] { 1, 2, 3, 6, 4, 7,5, 8 ,0};
+            int[] arr = new int[] { 4,3,2,1};
             Console.Write("Number of inversions are "
                           +inversion_count(arr,0,arr.Length-1));
+            Console.Write("yarab");
         }
 
     }
