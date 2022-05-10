@@ -66,7 +66,7 @@ namespace Algo_project
         }
         public static void Main()
         {
-            int[] arr = new int[] { 4,3,2,1,2,3,5,6,5,4,3};
+            int[] arr = new int[] { 4,3,2,1,2,3,5,6,5,4,3,3,2,1};
             Console.Write("Number of inversions are "
                           +inversion_count(arr,0,arr.Length-1));
             //Console.Write("yarab");
