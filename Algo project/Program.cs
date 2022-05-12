@@ -17,16 +17,15 @@ namespace npuzzle
 
             foreach (string file in files)
             {
+                Console.WriteLine(file);
                 FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read);
                 StreamReader sr = new StreamReader(fs);
 
-                List<List<int>> puzzle = new List<List<int>>();
+                List<int> puzzle = new List<int>();
                 string line = sr.ReadLine();
                 int n = int.Parse(line);
-                Console.WriteLine(n);
-
-                for (int i = 0; i < n; i++)
-                    puzzle.Add(new List<int>());
+                int blank_row = 0;
+                //Console.WriteLine(n);
 
                 for (int i = 0; i < n; i++)
                 {
@@ -39,20 +38,41 @@ namespace npuzzle
                     string[] numbers = line.Split(" ");
                     for (int j = 0; j < n; j++)
                     {
-                        puzzle[i].Add(int.Parse(numbers[j]));
+                        puzzle.Add(int.Parse(numbers[j]));
+                        if (int.Parse(numbers[j]) == 0)
+                            blank_row = n - i;
                     }
                 }
                 fs.Close();
+                
+                int invCnt = 0;
+
+                for (int i = 0; i < n*n; i++)
+                    for (int j = i + 1; j < n*n; j++)
+                        if (puzzle[i] > puzzle[j] && puzzle[i] != 0 && puzzle[j] != 0)
+                            invCnt++;
+
+                Console.WriteLine(invCnt + " " + blank_row);
+                if (n % 2 != 0)
+                    if (invCnt % 2 == 0 && invCnt != 0)
+                        Console.WriteLine("solvable");
+                    else
+                        Console.WriteLine("unsolvable");
+                else
+                    if (invCnt%2 == blank_row%2 || invCnt == 0)
+                        Console.WriteLine("unsolvable");
+                    else
+                        Console.WriteLine("solvable");
+
                 for (int i = 0; i < n; i++)
                 {
                     for (int j = 0; j < n; j++)
                     {
-                        Console.Write(puzzle[i][j]);
+                        Console.Write(puzzle[i * n + j]);
                         Console.Write(" ");
                     }
                     Console.WriteLine();
                 }
-                
             }
         }
     }
