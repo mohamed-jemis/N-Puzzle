@@ -65,6 +65,20 @@ namespace npuzzle
             return inversion_counter;
 
         }
+        public static bool IS_solvable(List<int> arr, int[] temp, int left, int right, int n, int blank_row)
+        {
+            int invCnt = inversion_count(arr, temp, left, right);
+            if (n % 2 != 0)
+                if (invCnt % 2 == 0 && invCnt != 0)
+                    return true;
+                else
+                    return false;
+            else
+                    if (invCnt % 2 == blank_row % 2 || invCnt == 0)
+                return false;
+            else
+                return true;
+        }
 
     }
 }

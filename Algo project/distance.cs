@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Algo_project
+namespace npuzzle
 {
     class distance
     {
-        static int[] ideal = { 1, 2, 3, 4, 5, 6, 7, 8, 0 };
-        public static int manhatten(int N, Node n)
+        
+        public static int manhatten(int N, Node n,int[] ideal)
         {
 
             int numbers = N * N;
@@ -21,12 +21,9 @@ namespace Algo_project
             int xi = 0;
             for (int i = 0; i < numbers; i++)
             {
-                places[n.arr[i]] = new int[2] { (i / 3), xi };
+                places[n.arr[i]] = new int[2] { (i / N), xi%N };
                 xi++;
-                if (xi == 3)
-                {
-                    xi = 0;
-                }
+                
             }
             xi = 0;
 
@@ -34,8 +31,8 @@ namespace Algo_project
 
             int[] zero_coordinates = new int[2];
             zero_coordinates = places[0];
-            n.x_zero = zero_coordinates[0];
-            n.y_zero = zero_coordinates[1];
+            n.y_zero = zero_coordinates[0];
+            n.x_zero = zero_coordinates[1];
 
 
             int index_manhatten = 1;
@@ -44,15 +41,16 @@ namespace Algo_project
 
             for (int i = 0; i < numbers; i++)
             {
-                if (ideal[i] == 0) { continue; }
+                if (ideal[i] == 0) { break; }
+                //if (index_manhatten == 16) { break; }
                 int[] cordinates = places[index_manhatten];
                 int x = cordinates[0];
                 int y = cordinates[1];
 
                 index_manhatten++;
-                manhatten += Math.Abs(x - i / 3) + Math.Abs(y - xi);
+                manhatten += Math.Abs(x - i / N) + Math.Abs(y - xi);
                 xi++;
-                if (xi == 3)
+                if (xi == N)
                 {
                     xi = 0;
                 }
@@ -63,7 +61,7 @@ namespace Algo_project
 
 
 
-        public static int hamming(int N, Node n)
+        public static int hamming(int N, Node n,int[] ideal)
         {
             int numbers = N * N;
             Dictionary<int, int[]> places = new Dictionary<int, int[]>();
@@ -74,9 +72,9 @@ namespace Algo_project
             int xi = 0;
             for (int i = 0; i < numbers; i++)
             {
-                places[n.arr[i]] = new int[2] { (i / 3), xi };
+                places[n.arr[i]] = new int[2] { (i / N), xi };
                 xi++;
-                if (xi == 3)
+                if (xi == N)
                 {
                     xi = 0;
                 }
@@ -99,13 +97,13 @@ namespace Algo_project
             {
                 if (ideal[i] == 0) { continue; }
                 int[] cord = places[index_hamming];
-                if (!(cord[0] == i / 3 && cord[1] == xi))
+                if (!(cord[0] == i / N && cord[1] == xi))
                 {
                     hamming++;
                 }
                 index_hamming++;
                 xi++;
-                if (xi == 3)
+                if (xi == N)
                 {
                     xi = 0;
                 }
