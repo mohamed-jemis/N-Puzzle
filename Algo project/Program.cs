@@ -22,6 +22,7 @@ namespace npuzzle
                 StreamReader sr = new StreamReader(fs);
 
                 List<int> puzzle = new List<int>();
+                List<int> inversions_check = new List<int>();
                 string line = sr.ReadLine();
                 int n = int.Parse(line);
                 int blank_row = 0;
@@ -41,16 +42,15 @@ namespace npuzzle
                         puzzle.Add(int.Parse(numbers[j]));
                         if (int.Parse(numbers[j]) == 0)
                             blank_row = n - i;
+                        else
+                            inversions_check.Add(int.Parse(numbers[j]));
                     }
                 }
                 fs.Close();
-                
-                int invCnt = 0;
 
-                for (int i = 0; i < n * n; i++)
-                    for (int j = i + 1; j < n * n; j++)
-                        if (puzzle[i] > puzzle[j] && puzzle[i] != 0 && puzzle[j] != 0)
-                            invCnt++;
+                int invCnt = 0;
+                int[] temp = new int[n * n + 1];//passed to the function just for the merge
+                invCnt = solvability.inversion_count(inversions_check, temp, 0, inversions_check.Count - 1);//here we will call the IS_solvable function
 
                 //Console.WriteLine(invCnt + " " + blank_row);
                 //if (n % 2 != 0)

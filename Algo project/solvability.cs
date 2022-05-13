@@ -65,5 +65,6 @@ namespace npuzzle
             return inversion_counter;
 
         }
+
     }
 }
