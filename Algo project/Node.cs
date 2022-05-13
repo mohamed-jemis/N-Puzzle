@@ -51,6 +51,9 @@ namespace Algo_project
                 //new_node.x_zero =n.x_zero ;
                 //new_node.y_zero = n.y_zero +1 ;
                 new_node.h_score = n.h_score + 1;
+                new_node.N = n.N;
+                new_node.g_score = distance.manhatten(new_node.N, new_node);
+                new_node.f_score = new_node.g_score + new_node.h_score;
             }
             if (n.down() == true)
             {
@@ -63,6 +66,9 @@ namespace Algo_project
                 // new_node.x_zero = n.x_zero ;
                 //new_node.y_zero = n.y_zero-1;
                 new_node.h_score = n.h_score + 1;
+                new_node.N = n.N;
+                new_node.g_score = distance.manhatten(new_node.N, new_node);
+                new_node.f_score = new_node.g_score + new_node.h_score;
             }
             if (n.right() == true)
             {
@@ -75,6 +81,9 @@ namespace Algo_project
                 // new_node.x_zero = n.x_zero - 1;
                 //new_node.y_zero = n.y_zero;
                 new_node.h_score = n.h_score + 1;
+                new_node.N = n.N;
+                new_node.g_score = distance.manhatten(new_node.N, new_node);
+                new_node.f_score = new_node.g_score + new_node.h_score;
             }
             if (n.left() == true)
             {
@@ -87,6 +96,9 @@ namespace Algo_project
                 // new_node.x_zero = n.x_zero + 1;
                 //new_node.y_zero = n.y_zero;
                 new_node.h_score = n.h_score + 1;
+                new_node.N = n.N;
+                new_node.g_score = distance.manhatten(new_node.N, new_node);
+                new_node.f_score = new_node.g_score + new_node.h_score;
             }
 
         }
