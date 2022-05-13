@@ -17,7 +17,7 @@ namespace npuzzle
 
             foreach (string file in files)
             {
-                Console.WriteLine(file);
+                //Console.WriteLine(file);
                 FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read);
                 StreamReader sr = new StreamReader(fs);
 
@@ -47,32 +47,42 @@ namespace npuzzle
                 
                 int invCnt = 0;
 
-                for (int i = 0; i < n*n; i++)
-                    for (int j = i + 1; j < n*n; j++)
+                for (int i = 0; i < n * n; i++)
+                    for (int j = i + 1; j < n * n; j++)
                         if (puzzle[i] > puzzle[j] && puzzle[i] != 0 && puzzle[j] != 0)
                             invCnt++;
 
-                Console.WriteLine(invCnt + " " + blank_row);
-                if (n % 2 != 0)
-                    if (invCnt % 2 == 0 && invCnt != 0)
-                        Console.WriteLine("solvable");
-                    else
-                        Console.WriteLine("unsolvable");
-                else
-                    if (invCnt%2 == blank_row%2 || invCnt == 0)
-                        Console.WriteLine("unsolvable");
-                    else
-                        Console.WriteLine("solvable");
+                //Console.WriteLine(invCnt + " " + blank_row);
+                //if (n % 2 != 0)
+                //    if (invCnt % 2 == 0 && invCnt != 0)
+                //        Console.WriteLine("solvable");
+                //    else
+                //        Console.WriteLine("unsolvable");
+                //else
+                //    if (invCnt%2 == blank_row%2 || invCnt == 0)
+                //        Console.WriteLine("unsolvable");
+                //    else
+                //        Console.WriteLine("solvable");
 
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < n; j++)
-                    {
-                        Console.Write(puzzle[i * n + j]);
-                        Console.Write(" ");
-                    }
-                    Console.WriteLine();
-                }
+                //for (int i = 0; i < n; i++)
+                //{
+                //    for (int j = 0; j < n; j++)
+                //    {
+                //        Console.Write(puzzle[i * n + j]);
+                //        Console.Write(" ");
+                //    }
+                //    Console.WriteLine();
+                //}
+
+                int[] arr = {100, 19, 3, 8, 1, 17, 16, 25, 60, 5};
+                MinHeap open = new MinHeap(arr.ToList());
+                open.add(0);
+
+                for (int i = 0; i <= arr.Count(); i++)
+                    Console.Write(open.pull() + " ");
+
+                Console.WriteLine();
+
             }
         }
     }
