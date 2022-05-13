@@ -74,14 +74,14 @@ namespace npuzzle
                 //    Console.WriteLine();
                 //}
 
-                int[] arr = {100, 19, 3, 8, 1, 17, 16, 25, 60, 5};
-                MinHeap open = new MinHeap(arr.ToList());
-                open.add(0);
+                //int[] arr = {100, 19, 3, 8, 1, 17, 16, 25, 60, 5};
+                //MinHeap open = new MinHeap(arr.ToList());
+                //open.add(0);
 
-                for (int i = 0; i <= arr.Count(); i++)
-                    Console.Write(open.pull() + " ");
+                //for (int i = 0; i <= arr.Count(); i++)
+                //    Console.Write(open.pull() + " ");
 
-                Console.WriteLine();
+                //Console.WriteLine();
 
             }
         }

@@ -8,7 +8,7 @@ namespace npuzzle
 {
     internal class MinHeap
     {
-        private List<int> arr = new List<int>();
+        private List<Node> arr = new List<Node>();
         private int size = 0;
 
         public MinHeap()
@@ -16,7 +16,7 @@ namespace npuzzle
             
         }
 
-        public MinHeap(List<int> arr)
+        public MinHeap(List<Node> arr)
         {
             this.arr = arr;
             size = arr.Count();
@@ -58,18 +58,18 @@ namespace npuzzle
             int right_indx = get_right_child(curr_node);
             int min = curr_node;
 
-            if (left_indx != -1 && arr[left_indx] < arr[curr_node])
+            if (left_indx != -1 && arr[left_indx].f_score < arr[curr_node].f_score)
             {
                 min = left_indx;
             }
-            if (right_indx != -1 && arr[right_indx] < arr[min])
+            if (right_indx != -1 && arr[right_indx].f_score < arr[min].f_score)
             {
                 min = right_indx;
             }
 
             if (min != curr_node)
             {
-                int temp = arr[curr_node];
+                Node temp = arr[curr_node];
                 arr[curr_node] = arr[min];
                 arr[min] = temp;
                 heapify_down(min);
@@ -80,9 +80,9 @@ namespace npuzzle
             if (curr_node != 0)
             {
                 int parent = get_parent(curr_node);
-                if (arr[parent] > arr[curr_node])
+                if (arr[parent].f_score > arr[curr_node].f_score)
                 {
-                    int temp = arr[curr_node];
+                    Node temp = arr[curr_node];
                     arr[curr_node] = arr[parent];
                     arr[parent] = temp;
                 }
@@ -90,15 +90,15 @@ namespace npuzzle
             }
            
         }
-        public void add(int element)
+        public void add(Node element)
         {
             arr.Add(element);
             size++;
             heapify_up(size-1);
         }
-        public int pull()
+        public Node pull()
         {
-            int temp = arr[0];
+            Node temp = arr[0];
             arr[0] = arr[size-1];
             size--;
             heapify_down(0);
