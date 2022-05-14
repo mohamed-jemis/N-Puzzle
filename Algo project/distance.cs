@@ -8,8 +8,8 @@ namespace npuzzle
 {
     class distance
     {
-        
-        public static int manhatten(int N, Node n,int[] ideal)
+
+        public static int manhatten(int N, Node n, int[] ideal)
         {
 
             int numbers = N * N;
@@ -18,13 +18,13 @@ namespace npuzzle
             {
                 places.Add(i, null);
             }
-           
+
             for (int i = 0; i < numbers; i++)
             {
-                places[n.arr[i]] = new int[2] { i%N, (i / N) };
-                
+                places[n.arr[i]] = new int[2] { i % N, (i / N) };
+
             }
-            
+
 
             // set zero-coordinate
 
@@ -43,12 +43,13 @@ namespace npuzzle
                 if (ideal[i] == 0) { break; }
                 //if (index_manhatten == 16) { break; }
                 int[] cordinates = places[index_manhatten];
+
                 int x = cordinates[0];
                 int y = cordinates[1];
 
                 index_manhatten++;
-                manhatten += Math.Abs(x - i%N) + Math.Abs(y - (i/N));
-                
+                manhatten += Math.Abs(x - i % N) + Math.Abs(y - (i / N));
+
             }
 
             return manhatten;
@@ -56,7 +57,7 @@ namespace npuzzle
 
 
 
-        public static int hamming(int N, Node n,int[] ideal)
+        public static int hamming(int N, Node n, int[] ideal)
         {
             int numbers = N * N;
             Dictionary<int, int[]> places = new Dictionary<int, int[]>();

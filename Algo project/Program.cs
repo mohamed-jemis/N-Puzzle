@@ -54,48 +54,44 @@ namespace npuzzle
                 //Checking solvability
                 int[] temp = new int[n * n + 1];//passed to the function just for the merge
                 bool is_solvable  = solvability.IS_solvable(inversions_check, temp, 0, inversions_check.Count - 1, n, blank_row);
+                //Dictionary<List<int>, bool> c = new Dictionary<List<int>, bool>();
 
                 if (is_solvable)
                 {
+                    Console.WriteLine(file);
                     //A* algorithm
                     Console.WriteLine("Solvable");
 
                     int[] ideal = get_ideal(n);
-                    List<int[]> closed_list = new List<int[]>();
+
+                    HashSet<string> closed_list = new HashSet<string>();
                     MinHeap active_list = new MinHeap();
 
                     int[] first_node_arr = puzzle.ToArray();
                     Node first_node = new Node(n, puzzle.ToArray(), null, ideal);
-                    
+
                     active_list.add(first_node);
 
                     Node chosen = new Node();
-                    while(active_list.get_size()!=0)
+                    while (active_list.get_size() != 0)
                     {
                         chosen = active_list.pull();
-                        closed_list.Add(chosen.arr);
-                        /*for (int i = 0; i < n; i++)
-                            {
-                                for (int j = 0; j < n; j++)
-                               {
-                                   Console.Write(chosen.arr[i * n + j]);
-                                   Console.Write(" ");
-                               }
-                                Console.WriteLine();
-                        }*/                        
-                       if (chosen.g_score==0)
+                        closed_list.Add(Node.get_string(chosen.arr));
+                        if (chosen.g_score == 0)
                         {
+
                             Console.WriteLine("wasalnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                            Console.WriteLine(chosen.h_score);
+                            Console.WriteLine(chosen.g_score);
                             break;
                         }
-                        //Console.WriteLine(chosen.g_score);
-                        Node.create_children(chosen, closed_list, active_list,ideal);
+                        Node.create_children(chosen, closed_list, active_list, ideal);
                     }
                 }
                 else
+                {
+                    Console.WriteLine(file);
                     Console.WriteLine("Unsolvable");
-
+                }
             }
 
         }
