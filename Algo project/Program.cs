@@ -73,26 +73,24 @@ namespace npuzzle
                     while(active_list.get_size()!=0)
                     {
                         chosen = active_list.pull();
-                        //for (int i = 0; i < n; i++)
-                        //    {
-                        //        for (int j = 0; j < n; j++)
-                        //        {
-                        //            Console.Write(chosen.arr[i * n + j]);
-                        //            Console.Write(" ");
-                        //        }
-                        //        Console.WriteLine();
-                        //}
-
-                        //Console.WriteLine();
-
-                        if (chosen.g_score==0)
+                        closed_list.Add(chosen.arr);
+                        /*for (int i = 0; i < n; i++)
+                            {
+                                for (int j = 0; j < n; j++)
+                               {
+                                   Console.Write(chosen.arr[i * n + j]);
+                                   Console.Write(" ");
+                               }
+                                Console.WriteLine();
+                        }*/                        
+                       if (chosen.g_score==0)
                         {
+                            Console.WriteLine("wasalnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                             Console.WriteLine(chosen.h_score);
                             break;
                         }
-
+                        //Console.WriteLine(chosen.g_score);
                         Node.create_children(chosen, closed_list, active_list,ideal);
-                        closed_list.Add(chosen.arr);
                     }
                 }
                 else

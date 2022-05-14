@@ -8,8 +8,8 @@ namespace npuzzle
 {
     class Node
     {
-        public int N;
-        public int[] arr;
+        public int N;//size 
+        public int[] arr;//puzzle 
         public int h_score = 0; //depth
         public int g_score; //manhatteen or hamming
         public int f_score; //g_score+h_score
@@ -19,13 +19,14 @@ namespace npuzzle
 
         public Node()
         {
+            //empty const.
         }
 
         public Node(int n, int[] arr, Node parent, int[]ideal)
         {
             N = n;
             this.arr = arr;
-            this.g_score = distance.manhatten(n, this, ideal);
+            this.g_score = distance.manhatten(n,this,ideal);
             this.parent = parent;
             if (parent != null)
             {
@@ -59,17 +60,17 @@ namespace npuzzle
             return true;
         }
 
-        public static void create_children(Node n,List<int[]> closed,MinHeap active,int[] ideal)
+        public static void create_children(Node parent,List<int[]> closed,MinHeap active,int[] ideal)
         {
-            if (n.up() == true)
+            if (parent.up() == true)
             {
-                int[] temp = new int[n.N*n.N];
-                n.arr.CopyTo(temp,0);
+                int[] temp = new int[parent.N*parent.N];
+                parent.arr.CopyTo(temp,0);
 
-                temp[(n.y_zero * n.N) + n.x_zero] = temp[((n.y_zero + 1) * n.N) + n.x_zero];
-                temp[((n.y_zero + 1) * n.N) + n.x_zero] = 0;
+                temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero + 1) * parent.N) + parent.x_zero];
+                temp[((parent.y_zero + 1) * parent.N) + parent.x_zero] = 0;
 
-                Node new_node = new Node(n.N, temp, n, ideal);
+                Node new_node = new Node(parent.N, temp, parent, ideal);
 
                 if(!new_node.duplicate_in_closed(closed))
                 {
@@ -77,45 +78,45 @@ namespace npuzzle
                 }
 
             }
-            if (n.down() == true)
+            if (parent.down() == true)
             {
-                int[] temp = new int[n.N * n.N];
-                n.arr.CopyTo(temp, 0);
+                int[] temp = new int[parent.N * parent.N];
+                parent.arr.CopyTo(temp, 0);
 
-                temp[(n.y_zero * n.N) + n.x_zero] = temp[((n.y_zero - 1) * n.N) + n.x_zero];
-                temp[((n.y_zero - 1) * n.N) + n.x_zero] = 0;
+                temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero - 1) * parent.N) + parent.x_zero];
+                temp[((parent.y_zero - 1) * parent.N) + parent.x_zero] = 0;
 
-                Node new_node = new Node(n.N, temp, n, ideal);
+                Node new_node = new Node(parent.N, temp, parent, ideal);
 
                 if (!new_node.duplicate_in_closed(closed))
                 {
                     active.add(new_node);
                 }
             }
-            if (n.right() == true)
+            if (parent.right() == true)
             {
-                int[] temp = new int[n.N * n.N];
-                n.arr.CopyTo(temp, 0);
+                int[] temp = new int[parent.N * parent.N];
+                parent.arr.CopyTo(temp, 0);
 
-                temp[(n.y_zero * n.N) + n.x_zero] = temp[((n.y_zero) * n.N) + (n.x_zero - 1)];
-                temp[((n.y_zero) * n.N) + (n.x_zero - 1)] = 0;
+                temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero) * parent.N) + (parent.x_zero - 1)];
+                temp[((parent.y_zero) * parent.N) + (parent.x_zero - 1)] = 0;
       
-                Node new_node = new Node(n.N, temp, n, ideal);
+                Node new_node = new Node(parent.N, temp, parent, ideal);
                 
                 if (!new_node.duplicate_in_closed(closed))
                 {
                     active.add(new_node);
                 }
             }
-            if (n.left() == true)
+            if (parent.left() == true)
             {
-                int[] temp = new int[n.N * n.N];
-                n.arr.CopyTo(temp, 0);
+                int[] temp = new int[parent.N * parent.N];
+                parent.arr.CopyTo(temp, 0);
 
-                temp[(n.y_zero * n.N) + n.x_zero] = temp[((n.y_zero) * n.N) + (n.x_zero + 1)];
-                temp[((n.y_zero) * n.N) + (n.x_zero + 1)] = 0;
+                temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero) * parent.N) + (parent.x_zero + 1)];
+                temp[((parent.y_zero) * parent.N) + (parent.x_zero + 1)] = 0;
 
-                Node new_node = new Node(n.N, temp, n, ideal);
+                Node new_node = new Node(parent.N, temp, parent, ideal);
                 
                 if (!new_node.duplicate_in_closed(closed))
                 {
