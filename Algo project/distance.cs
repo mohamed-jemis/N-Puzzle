@@ -18,21 +18,20 @@ namespace npuzzle
             {
                 places.Add(i, null);
             }
-            int xi = 0;
+           
             for (int i = 0; i < numbers; i++)
             {
-                places[n.arr[i]] = new int[2] { (i / N), xi%N };
-                xi++;
+                places[n.arr[i]] = new int[2] { i%N, (i / N) };
                 
             }
-            xi = 0;
+            
 
             // set zero-coordinate
 
             int[] zero_coordinates = new int[2];
             zero_coordinates = places[0];
-            n.y_zero = zero_coordinates[0];
-            n.x_zero = zero_coordinates[1];
+            n.x_zero = zero_coordinates[0];
+            n.y_zero = zero_coordinates[1];
 
 
             int index_manhatten = 1;
@@ -48,12 +47,8 @@ namespace npuzzle
                 int y = cordinates[1];
 
                 index_manhatten++;
-                manhatten += Math.Abs(x - i / N) + Math.Abs(y - xi);
-                xi++;
-                if (xi == N)
-                {
-                    xi = 0;
-                }
+                manhatten += Math.Abs(x - i%N) + Math.Abs(y - (i/N));
+                
             }
 
             return manhatten;

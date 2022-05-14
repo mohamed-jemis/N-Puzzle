@@ -92,7 +92,11 @@ namespace npuzzle
         }
         public void add(Node element)
         {
-            arr.Add(element);
+            if (size < arr.Count())
+                arr[size] = element;
+            else
+                arr.Add(element);
+
             size++;
             heapify_up(size-1);
         }
