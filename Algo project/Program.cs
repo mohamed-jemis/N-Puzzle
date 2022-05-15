@@ -14,7 +14,7 @@ namespace npuzzle
             //Getting paths
             string projectPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
             string testPath = projectPath + "\\Testcases";
-            string[] files = Directory.GetFiles(testPath, "*.txt", SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(testPath, "*.txt"/*, SearchOption.AllDirectories*/);
 
             //Iterating over all testcases
             foreach (string file in files)
@@ -80,8 +80,9 @@ namespace npuzzle
                         if (chosen.g_score == 0)
                         {
 
-                            Console.WriteLine("wasalnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                            Console.WriteLine(chosen.g_score);
+                            //Console.WriteLine("wasalnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                            Console.WriteLine(chosen.h_score);
+                            print_path(chosen);
                             break;
                         }
                         Node.create_children(chosen, closed_list, active_list, ideal);
@@ -107,6 +108,19 @@ namespace npuzzle
                     arr[i] = 0;
             }
             return arr;
+        }
+        public static void print_path(Node node)
+        {
+            if (node == null)
+                return;
+            print_path(node.parent);
+            for (int i = 0; i < node.N; i++)
+            {
+                for (int j = 0; j < node.N; j++)
+                    Console.Write(node.arr[i * node.N + j] + " ");
+                Console.WriteLine();
+            }
+            Console.WriteLine();
         }
     }
 }
