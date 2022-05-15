@@ -23,11 +23,11 @@ namespace npuzzle
             //empty const.
         }
 
-        public Node(int n, int[] arr, Node parent, int[] ideal)
+        public Node(int n, int[] arr, Node parent)
         {
             N = n;
             this.arr = arr;
-            this.g_score = distance.manhatten(n, this, ideal);
+            this.g_score = distance.manhatten(n,this);
             this.parent = parent;
             if (parent != null)
             {
@@ -61,7 +61,7 @@ namespace npuzzle
             return true;
         }
 
-        public static void create_children(Node parent, HashSet<string> closed, MinHeap active, int[] ideal)
+        public static void create_children(Node parent, HashSet<string> closed, MinHeap active)
         {
             if (parent.down() == true)
             {
@@ -71,8 +71,7 @@ namespace npuzzle
                 temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero - 1) * parent.N) + parent.x_zero];
                 temp[((parent.y_zero - 1) * parent.N) + parent.x_zero] = 0;
 
-                Node new_node = new Node(parent.N, temp, parent, ideal);
-
+                Node new_node = new Node(parent.N, temp, parent);
                 string current_arr = get_string(temp);
                 if (!new_node.duplicate_in_closed(closed, current_arr))
                 {
@@ -87,7 +86,7 @@ namespace npuzzle
                 temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero + 1) * parent.N) + parent.x_zero];
                 temp[((parent.y_zero + 1) * parent.N) + parent.x_zero] = 0;
 
-                Node new_node = new Node(parent.N, temp, parent, ideal);
+                Node new_node = new Node(parent.N, temp, parent);
 
                 string current_arr = get_string(temp);
                 if (!new_node.duplicate_in_closed(closed, current_arr))
@@ -104,7 +103,7 @@ namespace npuzzle
                 temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero) * parent.N) + (parent.x_zero - 1)];
                 temp[((parent.y_zero) * parent.N) + (parent.x_zero - 1)] = 0;
 
-                Node new_node = new Node(parent.N, temp, parent, ideal);
+                Node new_node = new Node(parent.N, temp, parent);
 
                 string current_arr = get_string(temp);
                 if (!new_node.duplicate_in_closed(closed, current_arr))
@@ -120,7 +119,7 @@ namespace npuzzle
                 temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero) * parent.N) + (parent.x_zero + 1)];
                 temp[((parent.y_zero) * parent.N) + (parent.x_zero + 1)] = 0;
 
-                Node new_node = new Node(parent.N, temp, parent, ideal);
+                Node new_node = new Node(parent.N, temp, parent);
 
                 string current_arr = get_string(temp);
                 if (!new_node.duplicate_in_closed(closed,current_arr))

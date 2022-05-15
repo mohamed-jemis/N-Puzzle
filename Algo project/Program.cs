@@ -62,17 +62,26 @@ namespace npuzzle
                     Console.WriteLine("Solvable");
 
                     var watch = new System.Diagnostics.Stopwatch();
-                    watch.Start();
                     //A* algorithm
 
-                    int[] ideal = get_ideal(n);
+                    //int[] ideal = get_ideal(n);
 
                     HashSet<string> closed_list = new HashSet<string>();
                     MinHeap active_list = new MinHeap();
-
+                    
                     int[] first_node_arr = puzzle.ToArray();
-                    Node first_node = new Node(n, puzzle.ToArray(), null, ideal);
+                    Node first_node = new Node(n, puzzle.ToArray(), null);
+                    Console.WriteLine("enter choice");
+                    string choice=Console.ReadLine();
+                    if (choice == "h")
+                        distance.choice = true;
 
+                    else
+                        distance.choice = false;
+                        
+                     
+
+                    watch.Start();
                     active_list.add(first_node);
 
                     Node chosen = new Node();
@@ -87,7 +96,7 @@ namespace npuzzle
                             //print_path(chosen);
                             break;
                         }
-                        Node.create_children(chosen, closed_list, active_list, ideal);
+                        Node.create_children(chosen, closed_list, active_list);
                     }
                     watch.Stop();
                     Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
@@ -103,7 +112,7 @@ namespace npuzzle
         }
 
         //Creating goal state
-        public static int[] get_ideal(int n)
+      /*  public static int[] get_ideal(int n)
         {
             int[] arr = new int[(n * n)];
             for (int i = 0; i < n * n; i++)
@@ -113,7 +122,7 @@ namespace npuzzle
                     arr[i] = 0;
             }
             return arr;
-        }
+        }*/
         public static void print_path(Node node)
         {
             if (node == null)
