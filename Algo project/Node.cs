@@ -63,6 +63,22 @@ namespace npuzzle
 
         public static void create_children(Node parent, HashSet<string> closed, MinHeap active, int[] ideal)
         {
+            if (parent.down() == true)
+            {
+                int[] temp = new int[parent.N * parent.N];
+                parent.arr.CopyTo(temp, 0);
+
+                temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero - 1) * parent.N) + parent.x_zero];
+                temp[((parent.y_zero - 1) * parent.N) + parent.x_zero] = 0;
+
+                Node new_node = new Node(parent.N, temp, parent, ideal);
+
+                string current_arr = get_string(temp);
+                if (!new_node.duplicate_in_closed(closed, current_arr))
+                {
+                    active.add(new_node);
+                }
+            }
             if (parent.up() == true)
             {
                 int[] temp = new int[parent.N * parent.N];
@@ -79,22 +95,6 @@ namespace npuzzle
                     active.add(new_node);
                 }
 
-            }
-            if (parent.down() == true)
-            {
-                int[] temp = new int[parent.N * parent.N];
-                parent.arr.CopyTo(temp, 0);
-
-                temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero - 1) * parent.N) + parent.x_zero];
-                temp[((parent.y_zero - 1) * parent.N) + parent.x_zero] = 0;
-
-                Node new_node = new Node(parent.N, temp, parent, ideal);
-
-                string current_arr = get_string(temp);
-                if (!new_node.duplicate_in_closed(closed, current_arr))
-                {
-                    active.add(new_node);
-                }
             }
             if (parent.right() == true)
             {

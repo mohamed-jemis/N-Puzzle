@@ -14,7 +14,7 @@ namespace npuzzle
             //Getting paths
             string projectPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
             string testPath = projectPath + "\\Testcases";
-            string[] files = Directory.GetFiles(testPath, "*.txt"/*, SearchOption.AllDirectories*/);
+            string[] files = Directory.GetFiles(testPath, "*.txt", SearchOption.AllDirectories);
 
             //Iterating over all testcases
             foreach (string file in files)
@@ -59,8 +59,11 @@ namespace npuzzle
                 if (is_solvable)
                 {
                     Console.WriteLine(file);
-                    //A* algorithm
                     Console.WriteLine("Solvable");
+
+                    var watch = new System.Diagnostics.Stopwatch();
+                    watch.Start();
+                    //A* algorithm
 
                     int[] ideal = get_ideal(n);
 
@@ -78,15 +81,17 @@ namespace npuzzle
                         chosen = active_list.pull();
                         closed_list.Add(Node.get_string(chosen.arr));
                         if (chosen.g_score == 0)
-                        {
-
-                            //Console.WriteLine("wasalnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                        {                            
                             Console.WriteLine(chosen.h_score);
-                            print_path(chosen);
+                            
+                            //print_path(chosen);
                             break;
                         }
                         Node.create_children(chosen, closed_list, active_list, ideal);
                     }
+                    watch.Stop();
+                    Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
+                    //Console.ReadLine();
                 }
                 else
                 {
@@ -114,6 +119,9 @@ namespace npuzzle
             if (node == null)
                 return;
             print_path(node.parent);
+            Console.WriteLine("g score is " + node.g_score);
+            Console.WriteLine("h score is " + node.h_score);
+            Console.WriteLine("f score is "+node.f_score);
             for (int i = 0; i < node.N; i++)
             {
                 for (int j = 0; j < node.N; j++)
