@@ -16,17 +16,18 @@ namespace npuzzle
         public Node parent;
         public int x_zero;
         public int y_zero;
+        public string s_rep = "";
 
         public Node()
         {
             //empty const.
         }
 
-        public Node(int n, int[] arr, Node parent, int[]ideal)
+        public Node(int n, int[] arr, Node parent)
         {
             N = n;
             this.arr = arr;
-            this.g_score = distance.manhatten(n,this,ideal);
+            this.g_score = distance.manhatten(n,this);
             this.parent = parent;
             if (parent != null)
             {
@@ -60,24 +61,8 @@ namespace npuzzle
             return true;
         }
 
-        public static void create_children(Node parent,List<int[]> closed,MinHeap active,int[] ideal)
+        public static void create_children(Node parent, HashSet<string> closed, MinHeap active)
         {
-            if (parent.up() == true)
-            {
-                int[] temp = new int[parent.N*parent.N];
-                parent.arr.CopyTo(temp,0);
-
-                temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero + 1) * parent.N) + parent.x_zero];
-                temp[((parent.y_zero + 1) * parent.N) + parent.x_zero] = 0;
-
-                Node new_node = new Node(parent.N, temp, parent, ideal);
-
-                if(!new_node.duplicate_in_closed(closed))
-                {
-                    active.add(new_node);
-                }
-
-            }
             if (parent.down() == true)
             {
                 int[] temp = new int[parent.N * parent.N];
@@ -86,12 +71,29 @@ namespace npuzzle
                 temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero - 1) * parent.N) + parent.x_zero];
                 temp[((parent.y_zero - 1) * parent.N) + parent.x_zero] = 0;
 
-                Node new_node = new Node(parent.N, temp, parent, ideal);
-
-                if (!new_node.duplicate_in_closed(closed))
+                Node new_node = new Node(parent.N, temp, parent);
+                string current_arr = get_string(temp);
+                if (!new_node.duplicate_in_closed(closed, current_arr))
                 {
                     active.add(new_node);
                 }
+            }
+            if (parent.up() == true)
+            {
+                int[] temp = new int[parent.N * parent.N];
+                parent.arr.CopyTo(temp, 0);
+
+                temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero + 1) * parent.N) + parent.x_zero];
+                temp[((parent.y_zero + 1) * parent.N) + parent.x_zero] = 0;
+
+                Node new_node = new Node(parent.N, temp, parent);
+
+                string current_arr = get_string(temp);
+                if (!new_node.duplicate_in_closed(closed, current_arr))
+                {
+                    active.add(new_node);
+                }
+
             }
             if (parent.right() == true)
             {
@@ -100,10 +102,11 @@ namespace npuzzle
 
                 temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero) * parent.N) + (parent.x_zero - 1)];
                 temp[((parent.y_zero) * parent.N) + (parent.x_zero - 1)] = 0;
-      
-                Node new_node = new Node(parent.N, temp, parent, ideal);
-                
-                if (!new_node.duplicate_in_closed(closed))
+
+                Node new_node = new Node(parent.N, temp, parent);
+
+                string current_arr = get_string(temp);
+                if (!new_node.duplicate_in_closed(closed, current_arr))
                 {
                     active.add(new_node);
                 }
@@ -116,27 +119,30 @@ namespace npuzzle
                 temp[(parent.y_zero * parent.N) + parent.x_zero] = temp[((parent.y_zero) * parent.N) + (parent.x_zero + 1)];
                 temp[((parent.y_zero) * parent.N) + (parent.x_zero + 1)] = 0;
 
-                Node new_node = new Node(parent.N, temp, parent, ideal);
-                
-                if (!new_node.duplicate_in_closed(closed))
+                Node new_node = new Node(parent.N, temp, parent);
+
+                string current_arr = get_string(temp);
+                if (!new_node.duplicate_in_closed(closed,current_arr))
                 {
                     active.add(new_node);
                 }
             }
 
         }
-        public bool duplicate_in_closed(List<int[]> closed)
+        public bool duplicate_in_closed(HashSet<string> closed,string current_arr)
         {
-            for(int i=0;i<closed.Count();i++)
+            if (closed.Contains(current_arr))
             {
-                if (arr.SequenceEqual(closed[i]))
-                {
-                    return true;
-                }
+                return true;
+
             }
             return false;
         }
-        
+        static public string get_string(int[]arr)
+        {
+            return string.Join("", arr);
+        }
+
         // x_zero and y_zero supposed to be set while calculating manhatten distance and hamming distance.
 
     }

@@ -13,7 +13,7 @@ namespace npuzzle
 
         public MinHeap()
         {
-            
+
         }
 
         public MinHeap(List<Node> arr)
@@ -25,7 +25,7 @@ namespace npuzzle
                 heapify_down(i);
             }
         }
-        
+
         public int get_size()
         {
             return size;
@@ -51,7 +51,7 @@ namespace npuzzle
             else
                 return -1;
         }
-        
+
         public void heapify_down(int curr_node)
         {
             int left_indx = get_left_child(curr_node);
@@ -88,7 +88,7 @@ namespace npuzzle
                 }
                 heapify_up(parent);
             }
-           
+
         }
         public void add(Node element)
         {
@@ -98,15 +98,15 @@ namespace npuzzle
                 arr.Add(element);
 
             size++;
-            heapify_up(size-1);
+            heapify_up(size - 1);
         }
         public Node pull()
         {
             Node temp = arr[0];
-            arr[0] = arr[size-1];
+            arr[0] = arr[size - 1];
             size--;
             heapify_down(0);
-            return temp; 
+            return temp;
         }
 
     }
