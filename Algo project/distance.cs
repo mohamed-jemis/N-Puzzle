@@ -9,10 +9,7 @@ namespace npuzzle
     class distance
     {
         public static bool choice;
-
-        
-
-        public static int manhatten(int N, Node n )
+        public static int Distance(int N, Node n )
         {
             int[] cordinates = new int[2];
             int manhatten = 0;
@@ -33,10 +30,13 @@ namespace npuzzle
                     n.x_zero = i % N;
                     n.y_zero = i / N;
                 }
+
                 cordinates[0] = x % N;
                 cordinates[1] = x / N;
+                
                 int real_x = i % N;
                 int real_y = i / N;
+                
                 if (!(cordinates[0] == real_x && cordinates[1] == real_y))
                 {
                     if (n.arr[i] != 0)

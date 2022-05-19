@@ -8,12 +8,12 @@ namespace npuzzle
 {
     class Node
     {
-        public int N;//size 
-        public int[] arr;//puzzle 
-        public int h_score = 0; //depth
-        public int g_score; //manhatteen or hamming
-        public int f_score; //g_score+h_score
         public Node parent;
+        public int[] arr;//puzzle 
+        public int N;//size 
+        public int g_score = 0; //depth
+        public int h_score; //manhatteen or hamming
+        public int f_score; //g_score+g_score
         public int x_zero;
         public int y_zero;
         public string s_rep = "";
@@ -27,12 +27,12 @@ namespace npuzzle
         {
             N = n;
             this.arr = arr;
-            this.g_score = distance.manhatten(n,this);
+            this.h_score = distance.Distance(n,this);
             this.parent = parent;
             if (parent != null)
             {
-                this.h_score = parent.h_score + 1;
-                this.f_score = this.g_score + this.h_score;
+                this.g_score = parent.g_score + 1;
+                this.f_score = this.h_score + this.g_score;
             }
         }
 
@@ -136,6 +136,7 @@ namespace npuzzle
                 return true;
 
             }
+
             return false;
         }
         static public string get_string(int[]arr)
@@ -143,7 +144,7 @@ namespace npuzzle
             return string.Join("", arr);
         }
 
-        // x_zero and y_zero supposed to be set while calculating manhatten distance and hamming distance.
+        // x_zero and y_zero supposed to be set while calculating Distance distance and hamming distance.
 
     }
 }
