@@ -8,104 +8,50 @@ namespace npuzzle
 {
     class distance
     {
-
-        public static int manhatten(int N, Node n, int[] ideal)
+        public static bool choice;
+        public static int Distance(int N, Node n )
         {
-
-            int numbers = N * N;
-            Dictionary<int, int[]> places = new Dictionary<int, int[]>();
-            for (int i = 0; i < numbers; i++)
-            {
-                places.Add(i, null);
-            }
-
-            for (int i = 0; i < numbers; i++)
-            {
-                places[n.arr[i]] = new int[2] { i % N, (i / N) };
-
-            }
-
-
-            // set zero-coordinate
-
-            int[] zero_coordinates = new int[2];
-            zero_coordinates = places[0];
-            n.x_zero = zero_coordinates[0];
-            n.y_zero = zero_coordinates[1];
-
-
-            int index_manhatten = 1;
+            int[] cordinates = new int[2];
             int manhatten = 0;
-
-
-            for (int i = 0; i < numbers; i++)
-            {
-                if (ideal[i] == 0) { break; }
-                //if (index_manhatten == 16) { break; }
-                int[] cordinates = places[index_manhatten];
-
-                int x = cordinates[0];
-                int y = cordinates[1];
-
-                index_manhatten++;
-                manhatten += Math.Abs(x - i % N) + Math.Abs(y - (i / N));
-
-            }
-
-            return manhatten;
-        }
-
-
-
-        public static int hamming(int N, Node n, int[] ideal)
-        {
+            int haming = 0;
             int numbers = N * N;
-            Dictionary<int, int[]> places = new Dictionary<int, int[]>();
-            for (int i = 0; i < numbers; i++)
+            for (int i = 0; i < numbers; i++) //N*N
             {
-                places.Add(i, null);
-            }
-            int xi = 0;
-            for (int i = 0; i < numbers; i++)
-            {
-                places[n.arr[i]] = new int[2] { (i / N), xi };
-                xi++;
-                if (xi == N)
+                int x;
+
+                if (n.arr[i] != 0)
                 {
-                    xi = 0;
+                    x = n.arr[i] - 1;
                 }
-            }
-            xi = 0;
-
-            // set zero-coordinate
-
-            int[] zero_coordinates = new int[2];
-            zero_coordinates = places[0];
-            n.x_zero = zero_coordinates[0];
-            n.y_zero = zero_coordinates[1];
-
-
-            int hamming = 0;
-            int index_hamming = 1;
-
-
-            for (int i = 0; i < numbers; i++)
-            {
-                if (ideal[i] == 0) { continue; }
-                int[] cord = places[index_hamming];
-                if (!(cord[0] == i / N && cord[1] == xi))
+                else
                 {
-                    hamming++;
-                }
-                index_hamming++;
-                xi++;
-                if (xi == N)
-                {
-                    xi = 0;
+                    x = N - 1;    //N-1;
+                    // set x_zero and y_zero
+                    n.x_zero = i % N;
+                    n.y_zero = i / N;
                 }
 
+                cordinates[0] = x % N;
+                cordinates[1] = x / N;
+                
+                int real_x = i % N;
+                int real_y = i / N;
+                
+                if (!(cordinates[0] == real_x && cordinates[1] == real_y))
+                {
+                    if (n.arr[i] != 0)
+                    {
+                        haming++;
+                        manhatten += Math.Abs(real_x - cordinates[0]) + Math.Abs(real_y - cordinates[1]);
+                    }
+                }
             }
-            return hamming;
+            if (choice == false)
+            {
+                return manhatten;
+            }
+            else
+                return haming;
         }
     }
 }

@@ -14,11 +14,12 @@ namespace npuzzle
             //Getting paths
             string projectPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
             string testPath = projectPath + "\\Testcases";
-            string[] files = Directory.GetFiles(testPath, "*.txt"/*, SearchOption.AllDirectories*/);
-
+            string[] files = Directory.GetFiles(testPath, "*.txt", SearchOption.AllDirectories);
+            var watch2 = new System.Diagnostics.Stopwatch();
             //Iterating over all testcases
             foreach (string file in files)
             {
+                //watch2.Start();
                 //Reading files
                 FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read);
                 StreamReader sr = new StreamReader(fs);
@@ -50,43 +51,34 @@ namespace npuzzle
                     }
                 }
                 fs.Close();
+                
+                //watch2.Stop();
+                Console.WriteLine($"Execution Time: {watch2.ElapsedMilliseconds} ms");
 
                 //Checking solvability
+                
+                var watch = new System.Diagnostics.Stopwatch();
                 int[] temp = new int[n * n + 1];//passed to the function just for the merge
-                bool is_solvable  = solvability.IS_solvable(inversions_check, temp, 0, inversions_check.Count - 1, n, blank_row);
-                //Dictionary<List<int>, bool> c = new Dictionary<List<int>, bool>();
-
+                bool is_solvable = solvability.IS_solvable(inversions_check, temp, 0, inversions_check.Count - 1, n, blank_row);
+               
                 if (is_solvable)
                 {
                     Console.WriteLine(file);
-                    //A* algorithm
                     Console.WriteLine("Solvable");
 
-                    int[] ideal = get_ideal(n);
-
+                    //A* algorithm
                     HashSet<string> closed_list = new HashSet<string>();
                     MinHeap active_list = new MinHeap();
 
-                    int[] first_node_arr = puzzle.ToArray();
-                    Node first_node = new Node(n, puzzle.ToArray(), null, ideal);
+                    Node first_node = new Node(n, puzzle.ToArray(), null);
 
-                    active_list.add(first_node);
+                    Console.WriteLine("enter choice");
+                    string choice = Console.ReadLine();
 
-                    Node chosen = new Node();
-                    while (active_list.get_size() != 0)
-                    {
-                        chosen = active_list.pull();
-                        closed_list.Add(Node.get_string(chosen.arr));
-                        if (chosen.g_score == 0)
-                        {
-
-                            //Console.WriteLine("wasalnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                            Console.WriteLine(chosen.h_score);
-                            print_path(chosen);
-                            break;
-                        }
-                        Node.create_children(chosen, closed_list, active_list, ideal);
-                    }
+                    watch.Start();
+                    A_star(closed_list, active_list, first_node, choice);
+                    watch.Stop();
+                    Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
                 }
                 else
                 {
@@ -96,24 +88,40 @@ namespace npuzzle
             }
 
         }
-
-        //Creating goal state
-        public static int[] get_ideal(int n)
+        public static void A_star(HashSet<string>closed_list,MinHeap Active_list,Node node,string choice)
         {
-            int[] arr = new int[(n * n)];
-            for (int i = 0; i < n * n; i++)
+
+            if (choice == "h")
+                distance.choice = true;
+
+            else
+                distance.choice = false;
+
+            Active_list.add(node);
+
+            Node chosen = new Node();
+
+            while (Active_list.get_size() != 0)
             {
-                arr[i] = i + 1;
-                if (i == (n * n)-1)
-                    arr[i] = 0;
+                chosen = Active_list.pull();
+                closed_list.Add(Node.get_string(chosen.arr));
+                if (chosen.h_score == 0)
+                {
+                    //Console.WriteLine(chosen.g_score);
+                    break;
+                }
+                Node.create_children(chosen, closed_list, Active_list);
             }
-            return arr;
+            print_path(chosen);
+            Console.WriteLine(chosen.g_score);
         }
         public static void print_path(Node node)
         {
             if (node == null)
                 return;
+
             print_path(node.parent);
+
             for (int i = 0; i < node.N; i++)
             {
                 for (int j = 0; j < node.N; j++)
@@ -122,5 +130,6 @@ namespace npuzzle
             }
             Console.WriteLine();
         }
+
     }
 }
