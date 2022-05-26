@@ -12,6 +12,7 @@ namespace npuzzle
         {
 
             int inversion_counter = 0;
+
             if (right > left)
             {
                 int mid = (right + left) / 2;
@@ -26,6 +27,7 @@ namespace npuzzle
         {
             int left_index = left, right_index = mid, k = left;
             int inversion_counter = 0;
+
             while ((left_index < mid) && (right_index <= right))
             {
                 if (arr[left_index] <= arr[right_index])
@@ -54,7 +56,6 @@ namespace npuzzle
                 k++;
                 right_index++;
             }
-
             for (left_index = left; left_index <= right; left_index++)
             {
                 arr[left_index] = temp[left_index];
@@ -66,6 +67,7 @@ namespace npuzzle
         public static bool IS_solvable(List<int> arr, int[] temp, int left, int right, int n, int blank_row)
         {
             int invCnt = inversion_count(arr, temp, left, right);
+
             if (n % 2 != 0)
             {
                 if (invCnt % 2 == 0 && invCnt != 0)
@@ -81,5 +83,33 @@ namespace npuzzle
                     return true;
             }
         }
+
+     /*   public static bool IS_solvable_Set(List<int> arr,int n)
+        {
+            SortedSet<int> my_set=new SortedSet<int>();
+            for(int i=0;i<n;i++)
+            {
+                Binary_search(my_set, arr[i]);
+                my_set.Add(arr[i]);
+                
+            }
+
+
+            return true;
+        }
+        public int Binary_search(SortedSet<int> s,int n)
+        {
+            int left=0, right=n, mid;
+            while(left<=right)
+            {
+                mid = (left + right) / 2;
+                if(mid<n)
+                {
+
+                }
+            }
+            return 1;
+        }
+            */
     }
 }

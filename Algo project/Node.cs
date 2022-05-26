@@ -29,6 +29,8 @@ namespace npuzzle
             this.arr = arr;
             this.h_score = distance.Distance(n,this);
             this.parent = parent;
+
+
             if (parent != null)
             {
                 this.g_score = parent.g_score + 1;
@@ -72,7 +74,10 @@ namespace npuzzle
                 temp[((parent.y_zero - 1) * parent.N) + parent.x_zero] = 0;
 
                 Node new_node = new Node(parent.N, temp, parent);
+                
                 string current_arr = get_string(temp);
+                
+                
                 if (!new_node.duplicate_in_closed(closed, current_arr))
                 {
                     active.add(new_node);
@@ -134,7 +139,6 @@ namespace npuzzle
             if (closed.Contains(current_arr))
             {
                 return true;
-
             }
 
             return false;
@@ -143,8 +147,6 @@ namespace npuzzle
         {
             return string.Join("", arr);
         }
-
-        // x_zero and y_zero supposed to be set while calculating Distance distance and hamming distance.
 
     }
 }

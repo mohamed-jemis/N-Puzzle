@@ -19,7 +19,7 @@ namespace npuzzle
             //Iterating over all testcases
             foreach (string file in files)
             {
-                //watch2.Start();
+                watch2.Start();
                 //Reading files
                 FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read);
                 StreamReader sr = new StreamReader(fs);
@@ -52,8 +52,8 @@ namespace npuzzle
                 }
                 fs.Close();
                 
-                //watch2.Stop();
-                Console.WriteLine($"Execution Time: {watch2.ElapsedMilliseconds} ms");
+                watch2.Stop();
+                Console.WriteLine($"Execution Time of Reading files: {watch2.ElapsedMilliseconds} ms");
 
                 //Checking solvability
                 
@@ -78,7 +78,7 @@ namespace npuzzle
                     watch.Start();
                     A_star(closed_list, active_list, first_node, choice);
                     watch.Stop();
-                    Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
+                    Console.WriteLine($"Execution Time of Puzzle: {watch.ElapsedMilliseconds} ms");
                 }
                 else
                 {
@@ -112,8 +112,9 @@ namespace npuzzle
                 }
                 Node.create_children(chosen, closed_list, Active_list);
             }
-            print_path(chosen);
+
             Console.WriteLine(chosen.g_score);
+            print_path(chosen);
         }
         public static void print_path(Node node)
         {
